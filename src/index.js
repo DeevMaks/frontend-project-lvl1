@@ -11,28 +11,26 @@ const greeting = () => {
 
 const gameEven = () => {
   const isEven = (number) => number % 2 === 0;
-  const isCorrect = (question, answer) => {
-    if (answer !== 'yes' && answer !== 'no') return false;
-    return (isEven(question) && answer === 'yes') || (!isEven(question) && answer === 'no');
-  };
-  const inverse = (val) => ((val === 'yes') ? 'no' : 'yes');
+  const isCorrect = (correctAnswer, userAnswer) => userAnswer === correctAnswer;
+  const getCorrectAnswer = (number) => isEven(number) ? 'yes' : 'no';
   const qUserName = greeting();
 
   let winsCount = 0;
   while (winsCount < 3) {
     const question = _.random(0, 100);
+    const correctAnswer = getCorrectAnswer(question);
 
     console.log('Answer "yes" if the number is even, otherwise answer "no".');
     console.log(`Question: ${question}`);
 
     const qAnswer = readlineSync.question('Your answer: ');
 
-    if (isCorrect(question, qAnswer)) {
+    if (isCorrect(qAnswer, correctAnswer)) {
       winsCount += 1;
       console.log('Correct!');
     } else {
       winsCount = 0;
-      console.log(`"${qAnswer}" is wrong answer ;(. Correct answer was "${inverse.qAnswer}".`);
+      console.log(`"${qAnswer}" is wrong answer ;(. Correct answer was "${correctAnswer}".`);
       console.log(`Let's try again, ${qUserName}`);
     }
   }
