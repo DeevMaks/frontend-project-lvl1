@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "brain-games": "bin/brain-games.js"
+    "brain-games": "bin/brain-games.js",
+    "brain-even": "bin/brain-even.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/DeevMaks/frontend-project-lvl1#readme",
   "dependencies": {
+    "lodash": "^4.17.15",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {
