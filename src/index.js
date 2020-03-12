@@ -1,5 +1,4 @@
 import readlineSync from 'readline-sync';
-import _ from 'lodash';
 
 const greeting = () => {
   console.log('Welcome to the Brain Games');
@@ -9,35 +8,36 @@ const greeting = () => {
   return qUserName;
 };
 
-const gameEven = () => {
-  const isEven = (number) => number % 2 === 0;
-  const isCorrect = (question, answer) => {
-    if (answer !== 'yes' && answer !== 'no') return false;
-    return (isEven(question) && answer === 'yes') || (!isEven(question) && answer === 'no');
-  };
-  const inverse = (val) => ((val === 'yes') ? 'no' : 'yes');
-  const qUserName = greeting();
+const round = (task, question) => {
+  console.log(task);
+  console.log(`Question: ${question}`);
+  const qAnswer = readlineSync.question('Your answer: ');
 
+  return qAnswer;
+};
+
+const game = (getQuestion, options = { attemptsToWin: 3, exitWhenLoosing: true }) => {
   let winsCount = 0;
-  while (winsCount < 3) {
-    const question = _.random(0, 100);
+  let gameOver = false;
+  const userName = greeting();
 
-    console.log('Answer "yes" if the number is even, otherwise answer "no".');
-    console.log(`Question: ${question}`);
+  while ((winsCount < options.attemptsToWin) && !gameOver) {
+    const { task, question, correctAnswer } = getQuestion();
+    const answer = round(task, question);
 
-    const qAnswer = readlineSync.question('Your answer: ');
-
-    if (isCorrect(question, qAnswer)) {
-      winsCount += 1;
+    if (answer === correctAnswer) {
       console.log('Correct!');
+      winsCount += 1;
     } else {
-      winsCount = 0;
-      console.log(`"${qAnswer}" is wrong answer ;(. Correct answer was "${inverse.qAnswer}".`);
-      console.log(`Let's try again, ${qUserName}`);
+      console.log(`"${answer}" is wrong answer ;(. Correct answer was "${correctAnswer}".`);
+      console.log(`Let's try again, ${userName}`);
+      gameOver = options.exitWhenLoosing;
     }
   }
 
-  console.log(`Congratulations, ${qUserName}!`);
+  if (!gameOver) {
+    console.log(`Congratulations, ${userName}!`);
+  }
 };
 
-export { greeting, gameEven };
+export { greeting, game };
