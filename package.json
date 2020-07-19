@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/DeevMaks/frontend-project-lvl1#readme",
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {
